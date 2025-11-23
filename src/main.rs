@@ -20,7 +20,12 @@ fn main() -> ExitCode {
         }
     } else {
         // No arguments provided. Default to REPL mode.
-        lib::run_repl();
-        ExitCode::SUCCESS
+        match lib::run_repl() {
+            Ok(_) => ExitCode::SUCCESS,
+            Err(err) => {
+                eprintln!("Error: {}", err);
+                ExitCode::FAILURE
+            }
+        }
     }
 }

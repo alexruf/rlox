@@ -11,13 +11,14 @@ pub fn run_file<P: AsRef<Path>>(path: P) -> Result<(), Box<dyn std::error::Error
     Ok(())
 }
 
-pub fn run_repl() {
+pub fn run_repl() -> Result<(), Box<dyn std::error::Error>> {
     println!("Run REPL");
+    Ok(())
 }
 
-fn run(source: &str) -> Result<(), String> {
+fn run(source: &str) -> Result<(), Box<dyn std::error::Error>> {
     if source.is_empty() {
-        return Err(String::from("Source code cannot be empty"));
+        return Err(String::from("Source code cannot be empty").into());
     }
 
     dbg!(source);
