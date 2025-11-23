@@ -1,12 +1,14 @@
 use crate::scanner::Scanner;
+use std::fs;
+use std::path::Path;
 
 mod scanner;
 mod token;
 
-pub fn run_file(path: &str) {
-    println!("Run file {}", path);
-    let source = std::fs::read_to_string(path).expect("Failed to read file");
-    run(&source).expect("Failed to run script");
+pub fn run_file<P: AsRef<Path>>(path: P) -> Result<(), Box<dyn std::error::Error>> {
+    let content = fs::read_to_string(path)?;
+    run(&content)?;
+    Ok(())
 }
 
 pub fn run_repl() {

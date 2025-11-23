@@ -11,8 +11,13 @@ fn main() -> ExitCode {
         ExitCode::from(64)
     } else if args.len() == 1 {
         // One argument provided. Assume it's the path to a script file.
-        lib::run_file(&args[0]);
-        ExitCode::SUCCESS
+        match lib::run_file(&args[0]) {
+            Ok(_) => ExitCode::SUCCESS,
+            Err(err) => {
+                eprintln!("Error: {}", err);
+                ExitCode::FAILURE
+            }
+        }
     } else {
         // No arguments provided. Default to REPL mode.
         lib::run_repl();
